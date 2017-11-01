@@ -1,0 +1,150 @@
+---
+swagger: "2.0"
+info:
+  description: "Storing user details"
+  version: "1.0.0"
+  title: "Users"
+tags:
+- name: "user"
+  description: "Everything about the users"
+- name: "login"
+  description: "Authentication"
+paths:
+  /user:
+    get:
+      tags:
+      - "user"
+      summary: "All users"
+      operationId: "getAllUsers"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              type: "object"
+              properties: {}
+      x-swagger-router-controller: "User"
+    post:
+      tags:
+      - "user"
+      summary: "Add a new user"
+      operationId: "newUser"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "user"
+        description: "User object that needs to be added to the store"
+        required: true
+        schema:
+          type: "object"
+      responses:
+        200:
+          description: "successful operation"
+        405:
+          description: "Invalid input"
+      x-swagger-router-controller: "User"
+  /user/{name}:
+    get:
+      tags:
+      - "user"
+      summary: "Find user by name"
+      description: "Returns a single user"
+      operationId: "getUserByName"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "name"
+        in: "path"
+        description: "Name of user to return"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "object"
+            properties: {}
+        404:
+          description: "User not found"
+      x-swagger-router-controller: "User"
+    put:
+      tags:
+      - "user"
+      summary: "Edit user details"
+      description: "Sends revised user details"
+      operationId: "editUserDetails"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "name"
+        in: "path"
+        description: "Name of user to edit"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "user"
+        description: "Edited user details"
+        required: true
+        schema:
+          type: "object"
+      responses:
+        200:
+          description: "successful operation"
+        400:
+          description: "Invalid user details"
+        404:
+          description: "User not found"
+      x-swagger-router-controller: "User"
+  /user/remove/{name}:
+    delete:
+      tags:
+      - "user"
+      summary: "Remove user"
+      description: "Delete user object"
+      operationId: "deleteUser"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "name"
+        in: "path"
+        description: "User's name to be deleted"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+        404:
+          description: "User not found"
+      x-swagger-router-controller: "User"
+  /login:
+    get:
+      tags:
+      - "login"
+      summary: "Your login information"
+      operationId: "getLoginDetails"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "username"
+        in: "query"
+        required: true
+        type: "string"
+      - name: "password"
+        in: "query"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "object"
+            properties: {}
+      x-swagger-router-controller: "Login"
+definitions: {}
